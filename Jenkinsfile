@@ -60,6 +60,7 @@ pipeline {
             }
             steps {
                 script {
+                    sleep(time: 5)
                     def response = httpRequest (
                         url: "http://$KUBE_MASTER_IP:30202/",
                         timeout: 300,
@@ -76,9 +77,7 @@ pipeline {
                 branch 'master'
             }
            steps {
-                input 'Deploy to Production?'
                 milestone(1)
-               
                 kubernetesDeploy(
                     kubeconfigId: 'kubeconfig',
                     configs: 'train-schedule-kube.yml',
